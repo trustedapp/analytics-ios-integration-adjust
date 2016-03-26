@@ -1,0 +1,28 @@
+PODS:
+  - Adjust (4.6.0):
+    - Adjust/Core (= 4.6.0)
+  - Adjust/Core (4.6.0)
+  - Analytics (3.0.7)
+  - Expecta (1.0.5)
+  - Segment-Adjust (1.0.0):
+    - Adjust (~> 4.6.0)
+    - Analytics (~> 3.0.0)
+  - Specta (1.0.5)
+
+DEPENDENCIES:
+  - Expecta
+  - Segment-Adjust (from `../`)
+  - Specta
+
+EXTERNAL SOURCES:
+  Segment-Adjust:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Adjust: c6179ee5ab2d333a19e59688a489c02223e31477
+  Analytics: b342fb4f43fa4f97ca6f4358b44d3295217ba294
+  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  Segment-Adjust: 62c39607a94ecd3c49e4117bd1b76987b84f9021
+  Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
+
+COCOAPODS: 0.39.0

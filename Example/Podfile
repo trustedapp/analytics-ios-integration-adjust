@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'Segment-Adjust_Example', :exclusive => true do
+  pod "Segment-Adjust", :path => "../"
+end
+
+target 'Segment-Adjust_Tests', :exclusive => true do
+  pod "Segment-Adjust", :path => "../"
+
+  pod 'Specta'
+  pod 'Expecta'
+end
