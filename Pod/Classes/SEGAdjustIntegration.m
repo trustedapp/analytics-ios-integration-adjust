@@ -25,6 +25,9 @@
         if ([self setEventBufferingEnabled]) {
             [adjustConfig setEventBufferingEnabled:YES];
         }
+        
+        [adjustConfig setLogLevel:ADJLogLevelVerbose];
+        
         [Adjust appDidLaunch:adjustConfig];
     }
     return self;
@@ -85,35 +88,45 @@
 
 - (void)track:(SEGTrackPayload *)payload
 {
-    ADJEvent *event = [ADJEvent eventWithEventToken:payload.event];
-
-    // Iterate over all the properties and set them.
-    for (NSString *key in payload.properties) {
-        NSString *value = [NSString stringWithFormat:@"%@", [payload.properties objectForKey:key]];
-        [event addCallbackParameter:key value:value];
-    }
-
-    // Track revenue specifically
-    NSNumber *revenue = [SEGAdjustIntegration extractRevenue:payload.properties withKey:@"revenue"];
-    NSString *currency = [SEGAdjustIntegration extractCurrency:payload.properties withKey:@"currency"];
-    if (revenue) {
-        [event setRevenue:[revenue doubleValue] currency:currency];
-    }
-
-    // Deduplicate transactions with the orderId
-    //    from https://segment.com/docs/spec/ecommerce/#completing-an-order
-    NSString *orderId = [SEGAdjustIntegration extractOrderId:payload.properties withKey:@"orderId"];
-    if (orderId) {
-        [event setTransactionId:orderId];
-    }
+    NSString *token = [self getMappedCustomEventToken:payload.event];
+    if (token) {
+        ADJEvent *event = [ADJEvent eventWithEventToken:token];
     
-    [Adjust trackEvent:event];
+        // Iterate over all the properties and set them.
+        for (NSString *key in payload.properties) {
+            NSString *value = [NSString stringWithFormat:@"%@", [payload.properties objectForKey:key]];
+            [event addCallbackParameter:key value:value];
+        }
+    
+        // Track revenue specifically
+        NSNumber *revenue = [SEGAdjustIntegration extractRevenue:payload.properties withKey:@"revenue"];
+        NSString *currency = [SEGAdjustIntegration extractCurrency:payload.properties withKey:@"currency"];
+        if (revenue) {
+            [event setRevenue:[revenue doubleValue] currency:currency];
+        }
+    
+        // Deduplicate transactions with the orderId
+        //    from https://segment.com/docs/spec/ecommerce/#completing-an-order
+        NSString *orderId = [SEGAdjustIntegration extractOrderId:payload.properties withKey:@"orderId"];
+        if (orderId) {
+            [event setTransactionId:orderId];
+        }
+    
+        [Adjust trackEvent:event];
+    }
 }
 
 - (void)registerForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
                                               options:(NSDictionary *)options
 {
     [Adjust setDeviceToken:deviceToken];
+}
+
+- (NSString *)getMappedCustomEventToken:(NSString *)event
+{
+    NSDictionary *tokens = [self.settings objectForKey:@"customEvents"];
+    NSString *token = [tokens objectForKey:event];
+    return token;
 }
 
 - (BOOL)setEventBufferingEnabled
