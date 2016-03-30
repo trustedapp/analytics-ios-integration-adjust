@@ -26,8 +26,6 @@
             [adjustConfig setEventBufferingEnabled:YES];
         }
         
-        [adjustConfig setLogLevel:ADJLogLevelVerbose];
-        
         [Adjust appDidLaunch:adjustConfig];
     }
     return self;
