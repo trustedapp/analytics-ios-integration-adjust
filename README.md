@@ -1,6 +1,6 @@
 # Analytics
 
-[![CI Status](http://img.shields.io/travis/segment-integrations/analytics-ios-integration-Adjust.svg?style=flat)](https://travis-ci.org/segment-integrations/analytics-ios-integration-Adjust)
+[![CI Status](http://img.shields.io/travis/segment-integrations/analytics-ios-integration-adjust.svg?style=flat)](https://travis-ci.org/segment-integrations/analytics-ios-integration-adjust)
 [![Version](https://img.shields.io/cocoapods/v/Segment-Adjust.svg?style=flat)](http://cocoapods.org/pods/Segment-Adjust)
 [![License](https://img.shields.io/cocoapods/l/Segment-Adjust.svg?style=flat)](http://cocoapods.org/pods/Segment-Adjust)
 
