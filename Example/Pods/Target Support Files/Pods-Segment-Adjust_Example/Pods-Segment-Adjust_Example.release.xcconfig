@@ -1,5 +1,8 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Adjust" "${PODS_ROOT}/Headers/Public/Analytics" "${PODS_ROOT}/Headers/Public/Expecta" "${PODS_ROOT}/Headers/Public/Segment-Adjust" "${PODS_ROOT}/Headers/Public/Specta"
+LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/Adjust" "$PODS_CONFIGURATION_BUILD_DIR/Analytics" "$PODS_CONFIGURATION_BUILD_DIR/Segment-Adjust"
 OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Adjust" -isystem "${PODS_ROOT}/Headers/Public/Analytics" -isystem "${PODS_ROOT}/Headers/Public/Expecta" -isystem "${PODS_ROOT}/Headers/Public/Segment-Adjust" -isystem "${PODS_ROOT}/Headers/Public/Specta"
 OTHER_LDFLAGS = $(inherited) -ObjC -l"Adjust" -l"Analytics" -l"Segment-Adjust" -framework "SystemConfiguration" -weak_framework "AdSupport" -weak_framework "iAd"
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}/Pods
