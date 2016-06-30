@@ -4,6 +4,6 @@
 
 @interface SEGSegmentIntegrationFactory : NSObject <SEGIntegrationFactory>
 
-+ (id)instance;
++ (instancetype)instance;
 
 @end

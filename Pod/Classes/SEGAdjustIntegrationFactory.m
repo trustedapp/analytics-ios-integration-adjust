@@ -3,10 +3,10 @@
 
 @implementation SEGAdjustIntegrationFactory
 
-+ (id)instance
++ (instancetype)instance
 {
     static dispatch_once_t once;
-    static SEGAdjustIntegration *sharedInstance;
+    static SEGAdjustIntegrationFactory *sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] init];
     });
