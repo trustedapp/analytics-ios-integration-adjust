@@ -14,7 +14,7 @@
     return sharedInstance;
 }
 
-- (id)init
+- (instancetype)init
 {
     self = [super init];
     return self;
@@ -22,7 +22,7 @@
 
 - (id<SEGIntegration>)createWithSettings:(NSDictionary *)settings forAnalytics:(SEGAnalytics *)analytics
 {
-    return [[SEGAdjustIntegration alloc] initWithSettings:settings];
+    return [[SEGAdjustIntegration alloc] initWithSettings:settings withAnalytics:analytics];
 }
 
 - (NSString *)key

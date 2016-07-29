@@ -1,11 +1,13 @@
 #import <Foundation/Foundation.h>
-#import <Analytics/SEGIntegration.h>
+#import <Analytics/SEGAnalytics.h>
+#import <Adjust/Adjust.h>
 
 
-@interface SEGAdjustIntegration : NSObject <SEGIntegration>
+@interface SEGAdjustIntegration : NSObject <SEGIntegration, AdjustDelegate>
 
 @property (nonatomic, strong) NSDictionary *settings;
+@property (nonatomic, strong) SEGAnalytics *analytics;
 
-- (id)initWithSettings:(NSDictionary *)settings;
+- (instancetype)initWithSettings:(NSDictionary *)settings withAnalytics:(SEGAnalytics *)analytics;
 
 @end

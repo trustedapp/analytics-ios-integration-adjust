@@ -1,20 +1,18 @@
 #import "SEGAdjustIntegration.h"
-#import <Adjust/Adjust.h>
-#import <Analytics/SEGAnalyticsUtils.h>
 
 
 @implementation SEGAdjustIntegration
 
 #pragma mark - Initialization
 
-- (id)initWithSettings:(NSDictionary *)settings
+- (instancetype)initWithSettings:(NSDictionary *)settings withAnalytics:(SEGAnalytics *)analytics
 {
     if (self = [super init]) {
         self.settings = settings;
+        self.analytics = analytics;
 
         NSString *appToken = [settings objectForKey:@"appToken"];
 
-        // Environment
         NSString *environment = ADJEnvironmentSandbox;
         if ([self setEnvironmentProduction]) {
             environment = ADJEnvironmentProduction;
@@ -22,9 +20,11 @@
         ADJConfig *adjustConfig = [ADJConfig configWithAppToken:appToken
                                                     environment:environment];
 
-        // Event buffering for network control
         if ([self setEventBufferingEnabled]) {
             [adjustConfig setEventBufferingEnabled:YES];
+        }
+        if ([self trackAttributionData]) {
+            [adjustConfig setDelegate:self];
         }
 
         [Adjust appDidLaunch:adjustConfig];
@@ -121,6 +121,22 @@
     [Adjust setDeviceToken:deviceToken];
 }
 
+- (void)adjustAttributionChanged:(ADJAttribution *)attribution
+{
+    [self.analytics track:@"Install Attributed" properties:@{
+        @"provider" : @"Adjust",
+        @"trackerToken" : attribution.trackerToken,
+        @"trackerName" : attribution.trackerName,
+        @"campaign" : @{
+            @"source" : attribution.network,
+            @"name" : attribution.campaign,
+            @"content" : attribution.clickLabel,
+            @"adCreative" : attribution.creative,
+            @"adGroup" : attribution.adgroup,
+        }
+    }];
+}
+
 - (NSString *)getMappedCustomEventToken:(NSString *)event
 {
     NSDictionary *tokens = [self.settings objectForKey:@"customEvents"];
@@ -137,5 +153,12 @@
 {
     return [(NSNumber *)[self.settings objectForKey:@"setEnvironmentProduction"] boolValue];
 }
+
+
+- (BOOL)trackAttributionData
+{
+    return [(NSNumber *)[self.settings objectForKey:@"trackAttributionData"] boolValue];
+}
+
 
 @end
