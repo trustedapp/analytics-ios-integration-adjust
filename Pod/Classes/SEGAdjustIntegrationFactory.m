@@ -1,6 +1,7 @@
 #import "SEGAdjustIntegrationFactory.h"
 #import "SEGAdjustIntegration.h"
 
+
 @implementation SEGAdjustIntegrationFactory
 
 + (instancetype)instance

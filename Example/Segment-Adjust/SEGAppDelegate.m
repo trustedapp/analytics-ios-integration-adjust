@@ -10,6 +10,7 @@
 #import <Analytics/SEGAnalytics.h>
 #import <Segment-Adjust/SEGAdjustIntegrationFactory.h>
 
+
 @implementation SEGAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -17,18 +18,19 @@
     // Override point for customization after application launch.
     [SEGAnalytics debug:YES];
     SEGAnalyticsConfiguration *config = [SEGAnalyticsConfiguration configurationWithWriteKey:@"gnjyuUpq7mZYtLM76mwltoiZcDsFpnfY"];
-    
+
     // Add any of your bundled integrations.
     [config use:[SEGAdjustIntegrationFactory instance]];
-    
+
     [SEGAnalytics setupWithConfiguration:config];
-    
+
     [[SEGAnalytics sharedAnalytics] identify:@"segment-fake-tester"
-                                      traits:@{ @"email": @"tool@fake-segment-tester.com" }];
-    
+                                      traits:@{ @"email" : @"tool@fake-segment-tester.com" }];
+
     [[SEGAnalytics sharedAnalytics] track:@"Completed Order"
-                               properties:@{ @"title": @"Launch Screen", @"revenue": @14.51 }];
-    
+                               properties:@{ @"title" : @"Launch Screen",
+                                             @"revenue" : @14.51 }];
+
     return YES;
 }
 
